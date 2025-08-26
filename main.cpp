@@ -1,14 +1,21 @@
 #include <print>
 
 #include "vector.hpp"
+#include "list.hpp"
 
 using std::print, std::println;
 
 int main() {
-    using namespace DS::Vector;
+    using namespace DS::List;
 
-    Vector vec{5};
-    for(size_t i = 0; i < 20; ++i) { vec.push_back(static_cast<int>(i) * 10 - 50); }
+    auto head = std::make_unique<ListNode>(10);
+    head->append_value(20);
+    head->append_value(30);
+    head->append_value(40);
+    head->append_value(50);
+    head->append_value(60);
 
-    println("{}", vec);
+    ListNode& current = head->next()->next()->get_begin();
+
+    println("{}", *(current.next()->next()));
 }
