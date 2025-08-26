@@ -1,16 +1,24 @@
 CXX := clang++
 CXXFLAGS := -std=c++23 -Wall -Wextra -g
-TARGET := main.o
+CPPFLAGS := -Isrc
+TARGET := main
 SRC := main.cpp
+OBJ := $(SRC:.cpp=.o)
+DEPS := $(OBJ:.o=.d)
 
 all: $(TARGET)
 
-$(TARGET): $(SRC)
-	$(CXX) $(CXXFLAGS) $(SRC) -o $(TARGET)
+$(TARGET): $(OBJ)
+	$(CXX) $(CXXFLAGS) $(OBJ) -o $@
+
+%.o: %.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -MMD -MP -c $< -o $@
+
+-include $(DEPS)
 
 .PHONY: run clean
 run: $(TARGET)
 	./$(TARGET)
 
 clean:
-	rm -f $(TARGET)
+	rm -f $(TARGET) $(OBJ) $(DEPS)
