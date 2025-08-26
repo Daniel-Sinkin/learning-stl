@@ -16,6 +16,8 @@ $(TARGET): $(OBJ)
 
 -include $(DEPS)
 
+.INTERMEDIATE: $(OBJ) $(DEPS)
+
 .PHONY: run clean
 run: $(TARGET)
 	./$(TARGET)
